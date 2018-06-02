@@ -8,7 +8,7 @@ namespace AutoTrader.Models.ViewModels.AutoDealer
     public class IndexViewModel
     {
         public List<Vehicle> Vehicles { get; set; }
-        public string SearchCriteria { get; set; }
+        public FilterViewModel Filter { get; set; }
         public PaginationOptions GetPaginationOptions { get; set; }
         public string Message { get; set; }
     }

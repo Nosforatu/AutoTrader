@@ -2,8 +2,10 @@ using AutoTrader.Models;
 using AutoTrader.Models.ViewModels.AutoDealer;
 using AutoTrader.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,6 +22,12 @@ namespace AutoTrader.Controllers
         public async Task<IActionResult> Index(IndexViewModel vm)
         {
             vm.Vehicles = await vehicleService.GetVehicles().OrderBy(o => o.Model).ToListAsync();
+            if(vm.Filter == null)
+            {
+                vm.Filter = new FilterViewModel();
+            }
+            vm.Filter.PriceRange = new List<SelectListItem>() { new SelectListItem() { Text = "1", Value= "1" }, new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" } };
+            vm.Filter.CelinderOptions = new List<SelectListItem>() { new SelectListItem() { Text = "1", Value= "1" }, new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" } };
 
             return View(vm);
         }
