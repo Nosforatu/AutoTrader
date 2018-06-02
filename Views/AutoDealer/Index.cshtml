@@ -56,7 +56,7 @@
                     R @item.Price.ToString("0.00")
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.VehicleId">Edit</a> |
+                    <a asp-action="UpdateVehicle" asp-route-VehicleId="@item.VehicleId">Edit</a> |
                     <a asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a>
                 </td>
             </tr>

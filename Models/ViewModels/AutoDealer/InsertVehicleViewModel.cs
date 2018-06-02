@@ -28,6 +28,8 @@ namespace AutoTrader.Models.ViewModels.AutoDealer
         [Required]
         public double Price { get; set; }
 
+        public Guid VehicleId { get; set; }
+
         public string Message { get; set;  }
     }
 }
