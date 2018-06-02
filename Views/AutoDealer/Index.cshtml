@@ -1,0 +1,65 @@
+﻿@model AutoTrader.Models.ViewModels.AutoDealer.IndexViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h2>Inventory</h2>
+
+<p>
+    <a asp-action="InsertVehicle">Insert New Vehicle</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Model
+            </th>
+            <th>
+                Make
+            </th>
+            <th>
+                Engine Capacity
+            </th>
+            <th>
+               Cylinder Variant
+            </th>
+            <th>
+                Top Speed
+            </th>
+            <th>
+                Price
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Vehicles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EngineCapacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CylinderVariant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TopSpeed) km/h
+                </td>
+                <td>
+                    R @item.Price.ToString("0.00")
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.VehicleId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
