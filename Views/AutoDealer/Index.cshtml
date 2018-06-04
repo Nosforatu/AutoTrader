@@ -10,13 +10,14 @@
     <a asp-action="InsertVehicle">Insert New Vehicle</a>
 </p>
 <div>
+    <h3>Report Filtering</h3>
     <form>
-        <select asp-for="Filter.PriceMinimum" asp-items="Model.Filter.PriceRange"><option value="">Not Applicable</option></select>
-        <select asp-for="Filter.PriceMaximum" asp-items="Model.Filter.PriceRange"><option value="">Not Applicable</option></select>
-        <input placeholder="Search" asp-for="Filter.SearchCriteria"/>
-        <input type="checkbox" asp-for="Filter.EnginCapacity" />
-        <select asp-for="Filter.CelinderVariant" asp-items="Model.Filter.CelinderOptions"><option value="">Not Applicable</option></select>
-        <input type="number" step="0.1" asp-for="Filter.SingularCelinderCapacity" />
+        Minimum Price <select asp-for="Filter.PriceMinimum" asp-items="Model.Filter.PriceRange"><option value="">Not Applicable</option></select><br/>
+        Maximum Price <select asp-for="Filter.PriceMaximum" asp-items="Model.Filter.PriceRange"><option value="">Not Applicable</option></select><br />
+        Search : <input placeholder="Search" asp-for="Filter.SearchCriteria"/><br />
+        Engin Capacit of 2L and higher <input type="checkbox" asp-for="Filter.EnginCapacity" /><br />
+        Celinders <select asp-for="Filter.CelinderVariant" asp-items="Model.Filter.CelinderOptions"><option value="">Not Applicable</option></select><br />
+        Singul Celinder Capacity <input type="number" step="0.1" asp-for="Filter.SingularCelinderCapacity" /><br />
         <button type="submit">Filter</button>
     </form>
 </div>

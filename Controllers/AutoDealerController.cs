@@ -22,12 +22,56 @@ namespace AutoTrader.Controllers
         public async Task<IActionResult> Index(IndexViewModel vm)
         {
             vm.Vehicles = await vehicleService.GetVehicles().OrderBy(o => o.Model).ToListAsync();
-            if(vm.Filter == null)
+
+            // Base Query
+            var query = vehicleService.GetVehicles();
+
+            //filter setup
+            if (vm.Filter == null)
             {
                 vm.Filter = new FilterViewModel();
+                vm.Vehicles = await vehicleService.GetVehicles().OrderBy(o => o.Model).ToListAsync();
+
+                return View(vm);
             }
-            vm.Filter.PriceRange = new List<SelectListItem>() { new SelectListItem() { Text = "1", Value= "1" }, new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" } };
-            vm.Filter.CelinderOptions = new List<SelectListItem>() { new SelectListItem() { Text = "1", Value= "1" }, new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" } };
+
+            // Search Filter Make or Model
+            if(vm.Filter.SearchCriteria != null)
+            {
+                query = query.Where(w => w.Make.ToLower().Contains(vm.Filter.SearchCriteria.ToLower()) || w.Model.ToLower().Contains(vm.Filter.SearchCriteria.ToLower()));
+            }
+
+            // Engine Capacity Filter
+            if(vm.Filter.EnginCapacity)
+            {
+                query = query.Where(w => w.EngineCapacity >= 2);
+            }
+
+            // Price Range Brackets
+            // Min check
+            if(vm.Filter.PriceMinimum > 0)
+            {
+                query = query.Where(w => w.Price >= vm.Filter.PriceMinimum);
+            }
+
+            // Max Check
+            if(vm.Filter.PriceMaximum > 0)
+            {
+                query = query.Where(w => w.Price <= vm.Filter.PriceMaximum);
+            }
+
+            // Filter Celinder Variant
+            if(vm.Filter.CelinderVariant > 0)
+            {
+                query = query.Where(w => w.CylinderVariant.Equals(vm.Filter.CelinderVariant));
+            }
+            
+            if(vm.Filter.SingularCelinderCapacity > 0)
+            {
+                query.Where(w => (w.EngineCapacity / w.CylinderVariant) == vm.Filter.SingularCelinderCapacity);
+            }
+
+            vm.Vehicles = await query.ToListAsync();
 
             return View(vm);
         }

@@ -26,5 +26,10 @@ namespace AutoTrader.Models.ViewModels.AutoDealer
         // Singil Celinder Variant
         public double SingularCelinderCapacity { get; set; }
 
+        public FilterViewModel()
+        {
+            this.PriceRange = new List<SelectListItem>() { new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" } };
+            this.CelinderOptions = new List<SelectListItem>() { new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" } };
+        }
     }
 }
