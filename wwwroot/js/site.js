@@ -1,15 +1,29 @@
-﻿// Write your JavaScript code.
+﻿var myChart;
+
+// Write your JavaScript code.
 $(document).ready(function () {
     
 });
 
+
+// Top Ten Air pressure 
 $('#btn-air-pressure').on('click', function () {
     $.getJSON("/Chart/AirPressure", function (result) {
-        console.log(result);
         initGraph(result.queryName, result.values);
     });
     
 });
+
+// V8 
+$('#btn-v8-air-pressure').on('click', function () {
+    $.getJSON("/Chart/AirPressureByCelinder", function (result) {
+        initGraph(result.queryName, result.values);
+    });
+
+});
+
+
+
 function initGraph(queryName, values) {
     console.log(queryName);
     console.log(values);
@@ -23,11 +37,11 @@ function initGraph(queryName, values) {
         dataa[x] = values[x].value;
     }
 
-    console.log(lable);
-    console.log(dataa);
+    if (myChart != null) {
+        myChart.destroy();
+    }
 
-
-    var myChart = new Chart(ctx, {
+    myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: lable,
