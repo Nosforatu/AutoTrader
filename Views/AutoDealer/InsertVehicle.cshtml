@@ -17,7 +17,7 @@ else
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="@if (Model.VehicleId == Guid.Empty) { <text>Insert</text>} else { <text>Update</text>} } " method="post">
+        <form asp-action="@if (Model.VehicleId == Guid.Empty) { <text>Insert</text>} else { <text>Update</text>}" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Model" class="control-label"></label>
@@ -49,6 +49,7 @@ else
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+            <input type="hidden" value="@Model.VehicleId" name="VehicleId" class="form-control" />
             <div class="form-group">
                 <input type="submit" value="@if (Model.VehicleId == Guid.Empty) { <text>Insert</text>} else { <text>Update</text>}" class="btn btn-default" />
             </div>
