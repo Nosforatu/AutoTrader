@@ -2,8 +2,17 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    
+    if ($("#snackbar").text().length > 0) {
+        ShowNotification();
+    }
 });
+
+//Snack Bar
+function ShowNotification() {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.className = "show";
+    setTimeout(function () { snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+}
 
 
 // Top Ten Air pressure 

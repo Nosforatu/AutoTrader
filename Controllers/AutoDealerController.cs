@@ -76,9 +76,9 @@ namespace AutoTrader.Controllers
             return View(vm);
         }
 
-        public IActionResult InsertVehicle()
+        public IActionResult InsertVehicle(InsertVehicleViewModel vm)
         {
-            return View();
+            return View(vm);
         }
 
         [HttpPost]
@@ -102,9 +102,18 @@ namespace AutoTrader.Controllers
                 TopSpeed = vm.TopSpeed
             };
 
-            await vehicleService.Insert(vehicle);
+            try
+            {
+                await vehicleService.Insert(vehicle);
+                vm.Message = "Inserted successfully";
+                return RedirectToAction("Index", new IndexViewModel() { Message = "Inserted successfully" });
+            } catch(Exception)
+            {
+                await vehicleService.Insert(vehicle);
+                vm.Message = "Please check your data and try again";
+                return View("InsertVehicle", vm);
+            }
             
-            return RedirectToAction("InsertVehicle",vm);
         }
 
         public async Task<IActionResult> UpdateVehicle(Guid VehicleId)
