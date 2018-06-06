@@ -21,7 +21,6 @@ namespace AutoTrader.Controllers
 
         public async Task<IActionResult> Index(IndexViewModel vm)
         {
-            vm.Vehicles = await vehicleService.GetVehicles().OrderBy(o => o.Model).ToListAsync();
 
             // Base Query
             var query = vehicleService.GetVehicles();
@@ -30,9 +29,6 @@ namespace AutoTrader.Controllers
             if (vm.Filter == null)
             {
                 vm.Filter = new FilterViewModel();
-                vm.Vehicles = await vehicleService.GetVehicles().OrderBy(o => o.Model).ToListAsync();
-
-                return View(vm);
             }
 
             // Search Filter Make or Model
@@ -72,7 +68,7 @@ namespace AutoTrader.Controllers
             }
 
             vm.Vehicles = await query
-                .OrderBy(o => o.Make)
+                .OrderBy(o => o.Model)
                 .ToListAsync();
 
             return View(vm);

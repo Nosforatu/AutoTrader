@@ -33,16 +33,13 @@ $('#btn-v8-air-pressure').on('click', function () {
 
 // Draw Graph
 function initGraph(queryName, values) {
-    console.log(queryName);
-    console.log(values);
-    var ctx = document.getElementById("myChart");
+    var ctx = document.getElementById("RatioChart");
     var lable = [];
-    var dataa = [];
+    var dataSet = [];
     
     for (x = 0; x < values.length; x++) {
-        console.log(x);
         lable[x] = values[x].name;
-        dataa[x] = values[x].value;
+        dataSet[x] = values[x].value;
     }
 
     if (myChart != null) {
@@ -55,7 +52,7 @@ function initGraph(queryName, values) {
             labels: lable,
             datasets: [{
                 label: queryName,
-                data: dataa,
+                data: dataSet,
                 backgroundColor: 'rgba(54, 162, 235, 1)'
                 
             }]

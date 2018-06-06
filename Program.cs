@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoTrader.Conntext;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -37,9 +38,22 @@ namespace AutoTrader
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args)
+        {
+
+            var host = WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
+
+
+            // Run migrations
+            using (var scope = host.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetService<AutoTraderContext>();
+                db.Database.Migrate();
+            }
+
+            return host;
+        }
     }
 }
