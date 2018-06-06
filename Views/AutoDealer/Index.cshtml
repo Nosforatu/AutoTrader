@@ -6,6 +6,8 @@
 
 <h2>Inventory</h2>
 
+<a data-toggle="modal" data-target="#delete-modal" data-backdrop="static" data-keyboard="false"> Woops</a>
+
 <p>
     <a asp-action="InsertVehicle">Insert New Vehicle</a>
 </p>
@@ -69,7 +71,12 @@
                 </td>
                 <td>
                     <a asp-action="UpdateVehicle" asp-route-VehicleId="@item.VehicleId">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a>
+                    <a class="btn-delete-vehickle" 
+                       data-id="@item.VehicleId" 
+                       data-toggle="modal" 
+                       data-target="#delete-modal" 
+                       data-backdrop="static" 
+                       data-keyboard="false">Delete</a>
                 </td>
             </tr>
         }
@@ -77,5 +84,7 @@
 </table>
 
 <div id="snackbar">@Model.Message</div>
+
+@Html.Partial("DeleteModal")
 
 

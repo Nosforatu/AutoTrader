@@ -141,6 +141,18 @@ namespace AutoTrader.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Delete(Guid VehicleID)
+        {
+            var vehicle = await vehicleService.GetVehicles().Where(w => w.VehicleId.Equals(VehicleID)).FirstOrDefaultAsync();
+            if(vehicle == null)
+                return RedirectToAction("Index", new IndexViewModel() { Message = "Invalid ID" });
+
+            await vehicleService.Delete(VehicleID);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Update(InsertVehicleViewModel vm)
         {
 

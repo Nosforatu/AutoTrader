@@ -31,8 +31,7 @@ $('#btn-v8-air-pressure').on('click', function () {
 
 });
 
-
-
+// Draw Graph
 function initGraph(queryName, values) {
     console.log(queryName);
     console.log(values);
@@ -72,3 +71,9 @@ function initGraph(queryName, values) {
         }
     });
 }
+
+// Get Data to Modal
+$(".btn-delete-vehickle").click(function () {
+    var vehicleId = $(this).data("id");
+    $("#vehicle-id").val(vehicleId);
+})
