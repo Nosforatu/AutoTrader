@@ -61,6 +61,13 @@ function initGraph(queryName, values) {
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            legend: {
+                onClick: function (e) {
+                    e.stopPropagation();
+                }
+            },
             scales: {
                 yAxes: [{
                     ticks: {

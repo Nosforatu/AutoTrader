@@ -28,8 +28,20 @@ namespace AutoTrader.Models.ViewModels.AutoDealer
 
         public FilterViewModel()
         {
-            this.PriceRange = new List<SelectListItem>() { new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" } };
-            this.CelinderOptions = new List<SelectListItem>() { new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" }, new SelectListItem() { Text = "1", Value = "1" } };
+            var priceList = new List<SelectListItem>();
+            var priceIncrement = 25000;
+            for (int x = 1; x <= 40; x++)
+            {
+                priceList.Add(new SelectListItem() { Text = (priceIncrement*x).ToString(), Value = (priceIncrement * x).ToString() });
+            }
+            this.PriceRange = priceList;
+
+            var celinderList = new List<SelectListItem>();
+            for (int x = 1; x <= 12; x++)
+            {
+                celinderList.Add(new SelectListItem() { Text = x.ToString(), Value = x.ToString() });
+            }
+            this.CelinderOptions = celinderList;
         }
     }
 }
