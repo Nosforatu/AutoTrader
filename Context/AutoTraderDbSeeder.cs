@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoTrader.Models;
 
@@ -6,6 +7,33 @@ namespace AutoTrader.Conntext
 {
     public static class AutoTraderDbSeeder
     {
+
+        private static readonly string[] carNames = {
+            "Hyundai",
+            "Chevrolet",
+            "Ford",
+            "Nissan",
+            "Nissan",
+            "Honda",
+            "Toyota",
+            "BMW",
+            "Ferari",
+            "Suzuki",
+        };
+
+        private static readonly string[] carModels = {
+            "CR",
+            "Accord",
+            "Civic",
+            "F-150",
+            "GT-12",
+            "Toca",
+            "Strider",
+            "Index",
+            "Swift",
+            "Rock",
+        };
+
         public static void Init(this AutoTraderContext context)
         {
             // exit code
@@ -14,193 +42,30 @@ namespace AutoTrader.Conntext
                 return;
             }
 
-            // Seeded Data
-            var cars = new Vehicle[] {
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 6,
-                     EngineCapacity = 2 ,
-                     Make = "BMW",
-                     Model = "5 Series",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 2,
-                     EngineCapacity = 1.2,
-                     Make = "Honda",
-                     Model = "GSXR",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 1,
-                     EngineCapacity = 1.3 ,
-                     Make = "Honda",
-                     Model = "5 Series",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 1,
-                     EngineCapacity = 1000,
-                     Make = "Suzuki",
-                     Model = "GSXR",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 7,
-                     EngineCapacity = 1.4 ,
-                     Make = "Tesla",
-                     Model = "5 Series",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 7,
-                     EngineCapacity = 1.5,
-                     Make = "Suzuki",
-                     Model = "GSXR",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 6,
-                     EngineCapacity = 1.6 ,
-                     Make = "Mustang",
-                     Model = "Charger",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 6,
-                     EngineCapacity = 1.7,
-                     Make = "Tesla",
-                     Model = "GSXR",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 5,
-                     EngineCapacity = 1.8 ,
-                     Make = "BMW",
-                     Model = "5 Series",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 5,
-                     EngineCapacity = 1.9,
-                     Make = "Volvo",
-                     Model = "cruzer",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 3,
-                     EngineCapacity = 2 ,
-                     Make = "BMW",
-                     Model = "5 Series",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 3,
-                     EngineCapacity = 2.1,
-                     Make = "Honda",
-                     Model = "GSXR",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 2,
-                     EngineCapacity = 1.2 ,
-                     Make = "BMW",
-                     Model = "4 Series",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 2,
-                     EngineCapacity = 2.3,
-                     Make = "Honda",
-                     Model = "GSXR",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                   VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 10,
-                     EngineCapacity = 2.4 ,
-                     Make = "BMW",
-                     Model = "3 Series",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 8,
-                     EngineCapacity = 25,
-                     Make = "Honda",
-                     Model = "GSXR",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 6,
-                     EngineCapacity = 1 ,
-                     Make = "BMW",
-                     Model = "2 Series",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 3,
-                     EngineCapacity = 1.8,
-                     Make = "Honda",
-                     Model = "GSXR",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 4,
-                     EngineCapacity = 1.5 ,
-                     Make = "BMW",
-                     Model = "Street fighter",
-                     Price = 111768.00,
-                     TopSpeed = 301.23
-                },
-                new Vehicle() {
-                    VehicleId = Guid.NewGuid(),
-                     CylinderVariant = 4,
-                     EngineCapacity = 1.3,
-                     Make = "Honda",
-                     Model = "GSXR",
-                     Price = 60000.00,
-                     TopSpeed = 301.23
-                },
-            };
+            var carList = new List<Vehicle>();
+            for(int x = 0; x < 30; x++)
+            {
+                carList.Add(GenerateRandomCar());
+            }
 
-            context.Vehicles.AddRange(cars);
+            context.Vehicles.AddRange(carList);
             context.SaveChanges();
             
+        }
+
+        public static Vehicle GenerateRandomCar()
+        {
+            Random random = new Random();
+            return new Vehicle()
+            {
+                VehicleId = Guid.NewGuid(),
+                CylinderVariant = random.Next(9) + 1,
+                EngineCapacity = Math.Round((Double)random.Next(3) + random.NextDouble(),1),
+                Make = carNames[random.Next(carNames.Length)],
+                Model = carModels[random.Next(carModels.Length)],
+                Price = ((Double)random.Next(20) + 1) * 10000.00 ,
+                TopSpeed = ((Double)random.Next(40000)+1) / 100
+            };
         }
     }
 }

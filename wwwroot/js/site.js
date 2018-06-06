@@ -1,44 +1,70 @@
-﻿// Write your JavaScript code.
+﻿var myChart;
+
+// Write your JavaScript code.
 $(document).ready(function () {
-    
+    if ($("#snackbar").text().length > 0) {
+        ShowNotification();
+    }
 });
 
+//Snack Bar
+function ShowNotification() {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.className = "show";
+    setTimeout(function () { snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+}
+
+
+// Top Ten Air pressure 
 $('#btn-air-pressure').on('click', function () {
     $.getJSON("/Chart/AirPressure", function (result) {
-        console.log(result);
         initGraph(result.queryName, result.values);
     });
     
 });
+
+// V8 
+$('#btn-v8-air-pressure').on('click', function () {
+    $.getJSON("/Chart/AirPressureByCelinder", function (result) {
+        initGraph(result.queryName, result.values);
+    });
+
+});
+
+// Draw Graph
 function initGraph(queryName, values) {
-    console.log(queryName);
-    console.log(values);
-    var ctx = document.getElementById("myChart");
+    var ctx = document.getElementById("RatioChart");
     var lable = [];
-    var dataa = [];
+    var dataSet = [];
     
     for (x = 0; x < values.length; x++) {
-        console.log(x);
         lable[x] = values[x].name;
-        dataa[x] = values[x].value;
+        dataSet[x] = values[x].value;
     }
 
-    console.log(lable);
-    console.log(dataa);
+    if (myChart != null) {
+        myChart.destroy();
+    }
 
-
-    var myChart = new Chart(ctx, {
+    myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: lable,
             datasets: [{
                 label: queryName,
-                data: dataa,
+                data: dataSet,
                 backgroundColor: 'rgba(54, 162, 235, 1)'
                 
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            legend: {
+                onClick: function (e) {
+                    e.stopPropagation();
+                }
+            },
             scales: {
                 yAxes: [{
                     ticks: {
@@ -49,3 +75,9 @@ function initGraph(queryName, values) {
         }
     });
 }
+
+// Get Data to Modal
+$(".btn-delete-vehickle").click(function () {
+    var vehicleId = $(this).data("id");
+    $("#vehicle-id").val(vehicleId);
+})

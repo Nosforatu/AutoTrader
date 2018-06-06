@@ -17,9 +17,11 @@ namespace AutoTrader.Models
         public string Make { get; set; }
 
         [Required]
+        [Range(1,10)]
         public double EngineCapacity { get; set; }
 
         [Required]
+        [Range(1, 20)]
         public int CylinderVariant { get; set;  }
 
         [Required]

@@ -52,7 +52,7 @@ namespace AutoTrader.Services
             vehicle.Price = item.Price;
             vehicle.TopSpeed = item.TopSpeed;
             
-            db.Vehicles.Update(item);
+            db.Vehicles.Update(vehicle);
             await db.SaveChangesAsync();
 
             return vehicle;

@@ -76,9 +76,9 @@ namespace AutoTrader.Controllers
             return View(vm);
         }
 
-        public IActionResult InsertVehicle()
+        public IActionResult InsertVehicle(InsertVehicleViewModel vm)
         {
-            return View();
+            return View(vm);
         }
 
         [HttpPost]
@@ -102,9 +102,18 @@ namespace AutoTrader.Controllers
                 TopSpeed = vm.TopSpeed
             };
 
-            await vehicleService.Insert(vehicle);
+            try
+            {
+                await vehicleService.Insert(vehicle);
+                vm.Message = "Inserted successfully";
+                return RedirectToAction("Index", new IndexViewModel() { Message = "Inserted successfully" });
+            } catch(Exception)
+            {
+                await vehicleService.Insert(vehicle);
+                vm.Message = "Please check your data and try again";
+                return View("InsertVehicle", vm);
+            }
             
-            return RedirectToAction("InsertVehicle",vm);
         }
 
         public async Task<IActionResult> UpdateVehicle(Guid VehicleId)
@@ -132,19 +141,32 @@ namespace AutoTrader.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Delete(Guid VehicleID)
+        {
+            var vehicle = await vehicleService.GetVehicles().Where(w => w.VehicleId.Equals(VehicleID)).FirstOrDefaultAsync();
+            if(vehicle == null)
+                return RedirectToAction("Index", new IndexViewModel() { Message = "Invalid ID" });
+
+            await vehicleService.Delete(VehicleID);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Update(InsertVehicleViewModel vm)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", new IndexViewModel() { Message = ModelState.Values.SelectMany(v => v.Errors).FirstOrDefault().ErrorMessage });
+            }
+            
             var vehicle = await vehicleService.GetVehicles().Where(w => w.VehicleId.Equals(vm.VehicleId)).FirstOrDefaultAsync();
             if(vehicle == null)
             {
                 return RedirectToAction("Index", new IndexViewModel() { Message = "Invalid Vehicle ID" });
             }
-
-            if(!ModelState.IsValid)
-            {
-                return RedirectToAction("Update", new IndexViewModel() { Message = ModelState.Values.SelectMany(v => v.Errors).FirstOrDefault().ErrorMessage });
-            }
-
+            
             Vehicle updateVehicle = new Vehicle()
             {
                 CylinderVariant = vm.CylinderVariant,
@@ -159,13 +181,15 @@ namespace AutoTrader.Controllers
             try
             {
                 await vehicleService.Update(updateVehicle);
+                return RedirectToAction("Index", new IndexViewModel() { Message = "Updated Successfully " });
             }
             catch(ArgumentException e)
             {
-                return RedirectToAction("Update", new IndexViewModel() { Message = e.Message});
+                vm.Message = e.Message;
+                return RedirectToAction("Index", new IndexViewModel() { Message = e.Message});
             }
             
-            return RedirectToAction("Index", new IndexViewModel() { Message = "Invalid Vehicle ID" });
+            
         }
     }
 }
